@@ -1,0 +1,22 @@
+{
+  "version": 2,
+  "functions": {
+    "collaboration-server.js": {
+      "runtime": "nodejs18.x"
+    }
+  },
+  "routes": [
+    {
+      "src": "/health",
+      "dest": "/collaboration-server.js"
+    },
+    {
+      "src": "/stats", 
+      "dest": "/collaboration-server.js"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/collaboration-server.js"
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+version: "1"
+build:
+  - name: server
+    buildCommand: npm install
+    startCommand: npm start
+    type: web
+    env: nodejs
+    region: oregon
+services:
+  - name: collaboration-server
+    type: web
+    env: node
+    repo: https://github.com/AhmedKhaledp-0/collaborative-todo-list.git
+    rootDir: ./server
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: PORT
+        value: 10000
+      - key: NODE_ENV
+        value: production

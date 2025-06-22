@@ -154,7 +154,7 @@
         "collaborative-todo-list.serverUrl": {
           "type": "string",
           "default": "ws://localhost:3001",
-          "description": "WebSocket server URL for real-time collaboration"
+          "description": "WebSocket server URL for real-time collaboration (use ws://localhost:3001 for local development)"
         },
         "collaborative-todo-list.username": {
           "type": "string",
