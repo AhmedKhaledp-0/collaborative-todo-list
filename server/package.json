@@ -1,0 +1,16 @@
+{
+  "name": "todo-collaboration-server",
+  "version": "1.0.0",
+  "description": "WebSocket server for collaborative todo list",
+  "main": "collaboration-server.js",
+  "scripts": {
+    "start": "node collaboration-server.js",
+    "dev": "nodemon collaboration-server.js"
+  },
+  "dependencies": {
+    "ws": "^8.18.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}

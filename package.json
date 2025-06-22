@@ -1,0 +1,208 @@
+{
+  "name": "collaborative-todo-list",
+  "displayName": "Collaborative Todo List",
+  "description": "A collaborative todo list extension for VS Code that allows multiple developers to assign and track tasks in real-time",
+  "version": "1.0.0",
+  "publisher": "ahmedkhaledp-0",
+  "icon": "./logo.png",
+  "author": {
+    "name": "Ahmed Khaled",
+    "email": "ahmedkhaled8415230@gmail.com"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/AhmedKhaledp-0/collaborative-todo-list.git#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AhmedKhaledp-0/collaborative-todo-list.git"
+  },
+  "bugs": {
+    "url": "https://github.com/AhmedKhaledp-0/collaborative-todo-list/issues"
+  },
+  "keywords": [
+    "todo",
+    "task",
+    "collaboration",
+    "team",
+    "project-management",
+    "real-time",
+    "websocket"
+  ],
+  "engines": {
+    "vscode": "^1.74.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "collaborative-todo-list.openTodoPanel",
+        "title": "Open Todo Panel",
+        "category": "Todo"
+      },
+      {
+        "command": "collaborative-todo-list.addTask",
+        "title": "Add Task",
+        "category": "Todo",
+        "icon": "$(add)"
+      },
+      {
+        "command": "collaborative-todo-list.refreshTasks",
+        "title": "Refresh Tasks",
+        "category": "Todo",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "collaborative-todo-list.deleteTask",
+        "title": "Delete Task",
+        "category": "Todo",
+        "icon": "$(trash)"
+      },
+      {
+        "command": "collaborative-todo-list.editTask",
+        "title": "Edit Task",
+        "category": "Todo",
+        "icon": "$(edit)"
+      },
+      {
+        "command": "collaborative-todo-list.openTaskDetails",
+        "title": "Open Task Details",
+        "category": "Todo"
+      },
+      {
+        "command": "collaborative-todo-list.markTodo",
+        "title": "Mark as Todo",
+        "category": "Todo",
+        "icon": "$(circle-outline)"
+      },
+      {
+        "command": "collaborative-todo-list.markInProgress",
+        "title": "Mark as In Progress",
+        "category": "Todo",
+        "icon": "$(sync)"
+      },
+      {
+        "command": "collaborative-todo-list.markDone",
+        "title": "Mark as Done",
+        "category": "Todo",
+        "icon": "$(check)"
+      }
+    ],
+    "views": {
+      "explorer": [
+        {
+          "id": "collaborative-todo-list.taskView",
+          "name": "Todo Tasks",
+          "when": "workspaceFolderCount > 0"
+        }
+      ]
+    },
+    "menus": {
+      "view/title": [
+        {
+          "command": "collaborative-todo-list.addTask",
+          "when": "view == collaborative-todo-list.taskView",
+          "group": "navigation"
+        },
+        {
+          "command": "collaborative-todo-list.refreshTasks",
+          "when": "view == collaborative-todo-list.taskView",
+          "group": "navigation"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "collaborative-todo-list.markTodo",
+          "when": "view == collaborative-todo-list.taskView && viewItem == task",
+          "group": "status"
+        },
+        {
+          "command": "collaborative-todo-list.markInProgress",
+          "when": "view == collaborative-todo-list.taskView && viewItem == task",
+          "group": "status"
+        },
+        {
+          "command": "collaborative-todo-list.markDone",
+          "when": "view == collaborative-todo-list.taskView && viewItem == task",
+          "group": "status"
+        },
+        {
+          "command": "collaborative-todo-list.editTask",
+          "when": "view == collaborative-todo-list.taskView && viewItem == task",
+          "group": "inline"
+        },
+        {
+          "command": "collaborative-todo-list.deleteTask",
+          "when": "view == collaborative-todo-list.taskView && viewItem == task",
+          "group": "inline"
+        }
+      ],
+      "commandPalette": [
+        {
+          "command": "collaborative-todo-list.openTodoPanel",
+          "when": "workspaceFolderCount > 0"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "Collaborative Todo List",
+      "properties": {
+        "collaborative-todo-list.serverUrl": {
+          "type": "string",
+          "default": "ws://localhost:3001",
+          "description": "WebSocket server URL for real-time collaboration"
+        },
+        "collaborative-todo-list.username": {
+          "type": "string",
+          "default": "",
+          "description": "Your username for task assignment"
+        },
+        "collaborative-todo-list.autoRefresh": {
+          "type": "boolean",
+          "default": true,
+          "description": "Automatically refresh tasks when changes are detected"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run package",
+    "compile": "npm run check-types && npm run lint && node esbuild.js",
+    "watch": "npm-run-all -p watch:*",
+    "watch:esbuild": "node esbuild.js --watch",
+    "watch:tsc": "tsc --noEmit --watch --project tsconfig.json",
+    "package": "npm run check-types && npm run lint && node esbuild.js --production",
+    "compile-tests": "tsc -p . --outDir out",
+    "watch-tests": "tsc -p . -w --outDir out",
+    "pretest": "npm run compile-tests && npm run compile && npm run lint",
+    "check-types": "tsc --noEmit",
+    "lint": "eslint src",
+    "test": "vscode-test",
+    "server:install": "cd server && npm install",
+    "server:start": "cd server && npm start",
+    "server:dev": "cd server && npm run dev"
+  },
+  "devDependencies": {
+    "@types/mocha": "^10.0.10",
+    "@types/node": "20.x",
+    "@types/uuid": "^10.0.0",
+    "@types/ws": "^8.18.1",
+    "@typescript-eslint/eslint-plugin": "^8.31.1",
+    "@typescript-eslint/parser": "^8.31.1",
+    "@vscode/test-cli": "^0.0.10",
+    "@vscode/test-electron": "^2.5.2",
+    "esbuild": "^0.25.3",
+    "eslint": "^9.25.1",
+    "npm-run-all": "^4.1.5",
+    "typescript": "^5.8.3"
+  },
+  "dependencies": {
+    "@types/vscode": "^1.74.0",
+    "uuid": "^11.1.0",
+    "ws": "^8.18.2"
+  }
+}
